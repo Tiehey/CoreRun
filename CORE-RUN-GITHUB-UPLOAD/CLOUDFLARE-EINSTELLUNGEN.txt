@@ -1,0 +1,15 @@
+CORE RUN — CLOUDFLARE WORKERS BUILDS
+
+Bestehender Worker: bold-field-33a4
+Production branch: main
+Root directory:
+- /, wenn package.json, wrangler.jsonc und public direkt oben im Repository liegen
+- CORE-RUN-GITHUB-UPLOAD, wenn dieser Ordner als Ganzes ins Repository geladen wurde
+Build command: leer lassen
+Deploy command: npx wrangler deploy
+
+Repository-Regel:
+Alle Dateien aus diesem Ordner kommen direkt in die oberste Ebene des GitHub-Repositories.
+Danach nur noch ueber GitHub aktualisieren, keine manuellen Uploads mehr.
+
+Cloudflare veroeffentlicht die Website direkt aus public. Ein dist-Ordner ist nicht erforderlich.

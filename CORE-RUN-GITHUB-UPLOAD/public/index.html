@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Core Run macht Laufbelastung persönlich: Track the Effort. Sichere dir Early Access für die native iPhone-App." />
+    <meta property="og:title" content="Core Run — Track the Effort" />
+    <meta property="og:description" content="Dein persönlicher Effort Score, ein Plan auf Basis deiner Läufe und die wichtigsten Daten im richtigen Moment." />
+    <meta property="og:type" content="website" />
+    <title>Core Run — Track the Effort</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="site-config.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Core Run Startseite">
+        <span>CORE</span>
+        <strong>RUN</strong>
+      </a>
+      <nav class="desktop-nav" aria-label="Hauptnavigation">
+        <a href="#effort">Effort Score</a>
+        <a href="#plan">Trainingsplan</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="button button-small" href="#waitlist">EARLY ACCESS</a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" data-track-section="hero">
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-glow" aria-hidden="true"></div>
+
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span class="signal-dot"></span> NATIVE IPHONE RUNNING EXPERIENCE</p>
+          <h1>TRACK THE<br /><span>EFFORT.</span></h1>
+          <p class="hero-lead">Core Run bewertet nicht nur, wie schnell du warst. Die App ordnet ein, wie schwer dieser Lauf für dich war – und wird mit jedem Lauf persönlicher.</p>
+
+          <div class="bonus-note"><span>BONUS</span> JETZT ANMELDEN UND SPÄTEREN BONUS SICHERN.</div>
+          <form class="waitlist-form ph-no-capture" id="waitlist" data-waitlist-form target="mailer-frame" novalidate>
+            <label class="sr-only" for="hero-email">E-Mail-Adresse</label>
+            <div class="form-row">
+              <input id="hero-email" name="fields[email]" type="email" autocomplete="email" placeholder="DEINE E-MAIL-ADRESSE" required data-waitlist-email />
+              <button type="submit">BONUS SICHERN <span aria-hidden="true">↗</span></button>
+            </div>
+            <label class="consent">
+              <input type="checkbox" name="consent" required />
+              <span>Ich möchte Informationen zum Start von Core Run erhalten und akzeptiere die <a href="datenschutz.html">Datenschutzhinweise</a>. Abmeldung jederzeit möglich.</span>
+            </label>
+            <p class="form-status" data-form-status role="status" aria-live="polite">EARLY ACCESS · DOUBLE-OPT-IN · JEDERZEIT ABMELDBAR</p>
+          </form>
+
+          <ul class="hero-proof" aria-label="Produkteigenschaften">
+            <li><span>01</span> Persönlicher Effort</li>
+            <li><span>02</span> Plan auf deiner Basis</li>
+            <li><span>03</span> Native iPhone App</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual reveal-right" data-parallax-phone>
+          <div class="orbit orbit-one" aria-hidden="true"></div>
+          <div class="orbit orbit-two" aria-hidden="true"></div>
+          <div class="phone phone-primary">
+            <span class="phone-speaker" aria-hidden="true"></span>
+            <img src="app-screens/live-run.png" alt="Core Run Live-Laufansicht mit Pace, Distanz und Live-Effort" width="1179" height="2556" />
+          </div>
+          <div class="floating-score" aria-hidden="true">
+            <span>LIVE EFFORT</span>
+            <strong>18</strong>
+            <i></i>
+          </div>
+        </div>
+
+        <a class="scroll-cue" href="#effort">
+          <span>SCROLL TO EFFORT</span>
+          <i aria-hidden="true"></i>
+        </a>
+      </section>
+
+      <section class="signal-strip" aria-label="Core Run Grundprinzipien">
+        <div>TRACK THE EFFORT <span>•</span> PERSONAL BASELINE <span>•</span> EFFORT SCORE <span>•</span> TRAININGSPLAN <span>•</span> DATA VAULT <span>•</span> TRACK THE EFFORT <span>•</span> PERSONAL BASELINE <span>•</span> EFFORT SCORE <span>•</span> TRAININGSPLAN <span>•</span> DATA VAULT <span>•</span></div>
+      </section>
+
+      <section class="effort-intro section" id="effort" data-track-section="effort_intro">
+        <div class="section-intro centered reveal">
+          <p class="eyebrow">01 — DAS HERZ VON CORE RUN</p>
+          <h2>NICHT IRGENDEIN WERT.<br /><span>DEIN EFFORT.</span></h2>
+          <p>Ein Lauf bei Hitze, bergauf oder auf müden Beinen ist nicht mit derselben Pace an einem perfekten Tag vergleichbar. Der Effort Score bringt diese Signale in einen persönlichen Zusammenhang.</p>
+        </div>
+      </section>
+
+      <section class="effort-scroll" data-effort-stage data-track-section="effort_explainer">
+        <div class="effort-sticky">
+          <div class="effort-grid" aria-hidden="true"></div>
+          <div class="effort-kicker">DEIN LAUF WIRD ZUM PERSÖNLICHEN SIGNAL</div>
+          <div class="effort-explainer-title" data-effort-title>
+            <span>01 / EFFORT SCORE</span>
+            <strong>SO FUNKTIONIERT<br />DEIN EFFORT SCORE.</strong>
+            <small>SCROLLEN, UM DEN SCORE AUFZUBAUEN</small>
+          </div>
+
+          <div class="effort-node node-fitness" data-effort-node data-at="0.22">
+            <span>01</span><strong>AKTUELLES FITNESSLEVEL</strong><small>Dein persönlicher Ausgangspunkt</small>
+          </div>
+          <div class="effort-node node-speed" data-effort-node data-at="0.34">
+            <span>02</span><strong>GESCHWINDIGKEIT</strong><small>Relativ zu deinem aktuellen Leistungsstand</small>
+          </div>
+          <div class="effort-node node-distance" data-effort-node data-at="0.46">
+            <span>03</span><strong>DISTANZ</strong><small>Wie weit die Belastung reicht</small>
+          </div>
+          <div class="effort-node node-duration" data-effort-node data-at="0.58">
+            <span>04</span><strong>DAUER</strong><small>Wie lange dein Körper arbeitet</small>
+          </div>
+          <div class="effort-node node-elevation" data-effort-node data-at="0.70">
+            <span>05</span><strong>HÖHENPROFIL</strong><small>Steigung und Gefälle verändern die Belastung</small>
+          </div>
+          <div class="effort-node node-weather" data-effort-node data-at="0.82">
+            <span>06</span><strong>WETTER</strong><small>Temperatur, Luftfeuchtigkeit und Wind</small>
+          </div>
+
+          <div class="effort-center">
+            <div class="score-ring score-ring-scroll" aria-label="Beispielhafter persönlicher Effort Score 53">
+              <div class="score-inner">
+                <strong data-effort-number>53</strong>
+                <span>EFFORT SCORE</span>
+                <small>PERSÖNLICH · 1—100</small>
+              </div>
+            </div>
+            <div class="effort-confidence"><i></i><span>BASIS-SICHERHEIT · MITTEL</span></div>
+          </div>
+
+          <div class="effort-progress" aria-hidden="true"><i data-effort-progress></i></div>
+          <p class="effort-mobile-note">SCROLLEN, UM DIE SIGNALE ZU VERBINDEN</p>
+        </div>
+      </section>
+
+      <section class="calibration section" data-calibration-stage data-track-section="calibration">
+        <div class="calibration-copy reveal-left">
+          <p class="eyebrow">DEINE BASIS WÄCHST MIT DIR</p>
+          <h2>JEDER LAUF MACHT<br /><span>DEINEN SCORE PERSÖNLICHER.</span></h2>
+          <p>Am Anfang helfen Fitnessprofil und ein vorsichtiges allgemeines Modell. Mit jedem Lauf gewinnt deine echte Historie an Gewicht.</p>
+        </div>
+        <div class="calibration-timeline reveal-right">
+          <div class="timeline-line"><i data-calibration-progress></i></div>
+          <article data-calibration-step data-at="0.08"><span>START</span><strong>FITNESSPROFIL</strong><p>Eine sichere Ausgangsbasis, bevor genügend eigene Daten vorhanden sind.</p></article>
+          <article data-calibration-step data-at="0.46"><span>ERSTE LÄUFE</span><strong>KALIBRIERUNG</strong><p>Eigene Pace und Belastung beeinflussen die Einordnung zunehmend stärker.</p></article>
+          <article data-calibration-step data-at="0.82"><span>DEINE HISTORIE</span><strong>PERSÖNLICHE BASIS</strong><p>Deine echten Läufe prägen den Vergleich zunehmend stärker.</p></article>
+        </div>
+      </section>
+
+      <section class="experience section" id="experience" data-track-section="run_system">
+        <div class="section-intro centered reveal">
+          <p class="eyebrow">02 — DEIN LAUF. DEINE ENTSCHEIDUNG.</p>
+          <h2>STARTE SO,<br /><span>WIE DU LAUFEN WILLST.</span></h2>
+        </div>
+
+        <div class="story-grid">
+          <article class="story-card choice-card reveal-left">
+            <div class="story-copy">
+              <span class="step">01 / START</span>
+              <h3>FREIER LAUF.<br /><em>ODER MIT ZIEL.</em></h3>
+              <p>Du entscheidest, wie du starten möchtest. Ohne Umwege loslaufen oder eine einzelne Einheit genau auf dein Ziel ausrichten.</p>
+              <div class="mode-options">
+                <div><span>FREE RUN</span><strong>EINFACH STARTEN</strong><p>Loslaufen, aufzeichnen und den Run anschließend persönlich einordnen lassen.</p></div>
+                <div><span>INDIVIDUELLES ZIEL</span><strong>GEZIELT LAUFEN</strong><p>Distanz, Pace, Zielzeit oder Effort-Aufbau festlegen.</p></div>
+              </div>
+            </div>
+            <div class="mode-phones" aria-label="Core Run Startbildschirm und individuelles Laufziel">
+              <div class="phone mode-phone mode-phone-home"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/action.png" alt="Core Run Startbildschirm mit großem Run-Button" width="1179" height="2556" loading="lazy" /></div>
+              <div class="phone mode-phone mode-phone-goal"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/goal.png" alt="Core Run Ansicht zum Einstellen eines individuellen Distanzziels" width="1179" height="2556" loading="lazy" /></div>
+            </div>
+          </article>
+
+          <article class="story-card reverse reveal-right">
+            <div class="story-copy">
+              <span class="step">02 / IM LAUF</span>
+              <h3>DIE WICHTIGSTEN DATEN.<br /><em>SOFORT LESBAR.</em></h3>
+              <p>Pace, Distanz und vorläufiger Live-Effort bleiben groß und kontrastreich. Du erkennst das Wesentliche in einem Blick, ohne ein Dashboard zu studieren.</p>
+              <ul><li>Große Laufwerte</li><li>Live-Effort</li><li>Haptische und visuelle Führung</li></ul>
+            </div>
+            <div class="phone phone-story phone-fly-left">
+              <span class="phone-speaker" aria-hidden="true"></span>
+              <img src="app-screens/live-run.png" alt="Core Run Live-Ansicht mit schnell lesbaren Laufdaten" width="1179" height="2556" loading="lazy" />
+            </div>
+          </article>
+
+          <article class="story-card reveal-left">
+            <div class="story-copy">
+              <span class="step">03 / NACH DEM LAUF</span>
+              <h3>DEIN LAUF.<br /><em>VOLLSTÄNDIG ANALYSIERT.</em></h3>
+              <p>Strecke, Pace-Verlauf, Laufdaten und Effort Score zeigen dir deinen Run aus mehreren Perspektiven – auf einen Blick und im Detail.</p>
+              <ul><li>Persönlicher Effort Score</li><li>Strecke und Pace-Verlauf</li><li>Distanz, Zeit und Höhenmeter</li></ul>
+            </div>
+            <div class="phone phone-story phone-fly-right">
+              <span class="phone-speaker" aria-hidden="true"></span>
+              <img src="app-screens/effort-score.png" alt="Core Run Laufanalyse mit persönlichem Effort Score 53" width="1179" height="2556" loading="lazy" />
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="plan-intro section" id="plan" data-track-section="training_plan_intro">
+        <div class="section-intro centered reveal">
+          <p class="eyebrow">03 — CORE RUN DENKT EINEN SCHRITT VORAUS</p>
+          <h2>KEIN STANDARDPLAN.<br /><span>DEIN INDIVIDUELLER TRAININGSPLAN.</span></h2>
+          <p>Core Run verbindet deine Laufhistorie, dein aktuelles Fitnesslevel, dein Ziel, deine Erholung und dein verfügbares Zeitbudget. So entsteht ein Plan, dessen Einheiten aufeinander abgestimmt sind.</p>
+        </div>
+      </section>
+
+      <section class="plan-scroll" data-plan-stage data-track-section="training_plan_explainer">
+        <div class="plan-sticky">
+          <div class="plan-grid" aria-hidden="true"></div>
+          <div class="plan-stage-label">WAS DEINEN PLAN FORMT</div>
+
+          <div class="plan-card" data-plan-card data-at="0.07"><span>01 / DEINE DATEN</span><strong>LAUFHISTORIE</strong><p>Typische Distanz, Pace, Effort und dein bisheriger Wochenumfang bilden die reale Ausgangslage.</p></div>
+          <div class="plan-card" data-plan-card data-at="0.21"><span>02 / DEINE BASIS</span><strong>AKTUELLES FITNESSLEVEL</strong><p>Komfortable Distanz, typische Geschwindigkeit und Belastbarkeit bestimmen, wo der Plan beginnt.</p></div>
+          <div class="plan-card" data-plan-card data-at="0.35"><span>03 / DEINE RICHTUNG</span><strong>DEIN ZIEL</strong><p>Zieldistanz, Zielpace und verfügbarer Zeitraum geben dem Plan eine klare Richtung.</p></div>
+          <div class="plan-card" data-plan-card data-at="0.49"><span>04 / DEIN KÖRPER</span><strong>ERHOLUNG & LETZTE BELASTUNG</strong><p>Die jüngsten Einheiten beeinflussen, wie vorsichtig die kommende Belastung aufgebaut wird.</p></div>
+          <div class="plan-card" data-plan-card data-at="0.63"><span>05 / DEIN ALLTAG</span><strong>VERFÜGBARES ZEITBUDGET</strong><p>Mögliche Trainingstage und dein maximaler Zeitaufwand halten den Plan realistisch.</p></div>
+          <div class="plan-card" data-plan-card data-at="0.77"><span>06 / DEIN FORTSCHRITT</span><strong>TRAININGSVERLAUF</strong><p>Absolvierte, verpasste oder sehr belastende Einheiten verändern das, was als Nächstes kommt.</p></div>
+          <div class="plan-card plan-result-card" data-plan-card data-at="0.91"><span>DEIN CORE RUN PLAN</span><strong>AUFEINANDER ABGESTIMMT.</strong><p>Persönlich gestartet. Realistisch aufgebaut. Vorsichtig weiterentwickelt.</p></div>
+
+          <div class="plan-phone-stage">
+            <div class="plan-phone-label"><span>DEIN PLAN</span><strong data-plan-counter>01 / 06</strong></div>
+            <div class="phone plan-stage-phone"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/training-plan.png" alt="Individueller Core Run Trainingsplan" width="1179" height="2556" loading="lazy" /></div>
+            <div class="plan-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="plan-progress" aria-hidden="true"><i data-plan-progress></i></div>
+        </div>
+      </section>
+
+      <section class="plan-honesty section" data-track-section="training_plan_detail">
+        <div class="plan-honesty-card reveal">
+          <div>
+            <p class="eyebrow">PERSONALISIERT. NACHVOLLZIEHBAR. VORSICHTIG.</p>
+            <h2>DER PLAN BEGINNT<br /><span>BEI DIR.</span></h2>
+            <p>Die erste Version ist ein persönlicher, regelbasierter Trainingsplan – kein magischer KI-Coach. Sie nutzt deine echte Basis, schützt vor unrealistischen Sprüngen und reagiert vorsichtig auf hohe Belastung und verpasste Einheiten.</p>
+          </div>
+          <div class="phone plan-phone">
+            <span class="phone-speaker" aria-hidden="true"></span>
+            <img src="app-screens/training-plan.png" alt="Persönlicher Core Run Trainingsplan" width="1179" height="2556" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <section class="vault section" data-track-section="data_vault">
+        <div class="vault-layout">
+          <div class="vault-copy reveal-left">
+            <p class="eyebrow">04 — ATHLETE DATA VAULT</p>
+            <h2>DEINE DATEN.<br /><span>DEIN SIGNAL.</span></h2>
+            <p>Der Data Vault ordnet deine Läufe, Belastung und Datenqualität so, dass daraus ein verständliches Athletenbild entsteht – statt einer Wand aus Zahlen.</p>
+            <div class="metric-list"><div><strong>35</strong><span>Ø EFFORT</span></div><div><strong>7.7</strong><span>KM DISTANZ</span></div><div><strong>100%</strong><span>DATENVERTRAUEN</span></div></div>
+          </div>
+          <div class="vault-phones reveal-right">
+            <div class="phone phone-back"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/training-plan.png" alt="Core Run Trainingsplan" width="1179" height="2556" loading="lazy" /></div>
+            <div class="phone phone-front"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/data-vault.png" alt="Core Run Athlete Data Vault" width="1179" height="2556" loading="lazy" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="manifesto section" data-track-section="manifesto">
+        <div class="manifesto-inner reveal">
+          <p class="eyebrow">CORE RUN MANIFESTO</p>
+          <blockquote>FUCK THE PACE.<br /><span>— TRACK THE EFFORT.</span></blockquote>
+        </div>
+      </section>
+
+      <section class="feedback section" id="feedback" data-track-section="feedback">
+        <div class="feedback-copy reveal-left">
+          <p class="eyebrow">05 — DEIN INPUT BAUT CORE RUN</p>
+          <h2>SAG UNS,<br /><span>WAS DIR FEHLT.</span></h2>
+          <p>Eine Idee, Kritik oder etwas, das dich an Lauf-Apps nervt? Schreib es direkt auf. Kein Konto und keine verpflichtende E-Mail-Adresse.</p>
+          <div class="feedback-promise"><strong>KEIN LOGIN.</strong><strong>E-MAIL OPTIONAL.</strong><strong>DIREKT BEIM BUILDER.</strong></div>
+        </div>
+
+        <form class="feedback-form ph-no-capture reveal-right" data-feedback-form novalidate>
+          <fieldset>
+            <legend>WORUM GEHT ES?</legend>
+            <div class="feedback-categories">
+              <label><input type="radio" name="category" value="Idee" /><span>IDEE</span></label>
+              <label><input type="radio" name="category" value="Kritik" /><span>KRITIK</span></label>
+              <label><input type="radio" name="category" value="Problem" /><span>PROBLEM</span></label>
+              <label><input type="radio" name="category" value="Wunsch" /><span>WUNSCH</span></label>
+              <label><input type="radio" name="category" value="Sonstiges" /><span>SONSTIGES</span></label>
+            </div>
+          </fieldset>
+          <label class="feedback-label" for="feedback-message">DEINE NACHRICHT</label>
+          <textarea id="feedback-message" name="message" rows="7" minlength="5" maxlength="2000" placeholder="WAS SUCHST DU? WAS NERVT DICH? WAS SOLLTE CORE RUN KÖNNEN?" required></textarea>
+          <label class="feedback-label optional" for="feedback-email">E-MAIL <span>OPTIONAL · NUR WENN DU EINE ANTWORT MÖCHTEST</span></label>
+          <input id="feedback-email" name="email" type="email" autocomplete="email" placeholder="DEINE E-MAIL-ADRESSE" />
+          <input class="honey-field" type="text" name="website_check" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <label class="feedback-privacy"><input type="checkbox" name="privacy" required /><span>Ich akzeptiere die <a href="datenschutz.html">Datenschutzhinweise</a> zur Verarbeitung meiner Nachricht.</span></label>
+          <button class="feedback-submit" type="submit">FEEDBACK ABSENDEN <span>→</span></button>
+          <p class="feedback-status" data-feedback-status role="status" aria-live="polite">MAXIMAL 2.000 ZEICHEN · KEINE GESUNDHEITSDATEN SENDEN</p>
+        </form>
+      </section>
+
+      <section class="faq section" id="faq" data-track-section="faq">
+        <div class="section-intro reveal-left">
+          <p class="eyebrow">06 — NOCH FRAGEN?</p>
+          <h2>THE<br /><span>RUN DOWN.</span></h2>
+        </div>
+        <div class="faq-list reveal-right">
+          <details><summary>WAS BEDEUTET DER EFFORT SCORE?<span>+</span></summary><p>Er ordnet die Belastung eines Laufs von 1 bis 100 ein. Entscheidend ist nicht nur die Pace, sondern dein aktuelles Fitnesslevel, Geschwindigkeit, Distanz, Dauer, Höhenprofil und Wetter.</p></details>
+          <details><summary>WANN KANN ICH CORE RUN TESTEN?<span>+</span></summary><p>Die App befindet sich in aktiver Entwicklung. Mitglieder der Waitlist erfahren zuerst, sobald eine begrenzte Testphase startet.</p></details>
+          <details><summary>IST DER TRAININGSPLAN VOLLSTÄNDIG ADAPTIV?<span>+</span></summary><p>Noch nicht. Er startet bereits auf Grundlage deiner Historie und deines Fitnessprofils und reagiert vorsichtig auf bestimmte Belastungs- und Ausfallsignale. Weitere Erholungsdaten sollen später stärker einfließen.</p></details>
+          <details><summary>STARTET CORE RUN NUR AUF DEM IPHONE?<span>+</span></summary><p>Ja. Der erste Fokus liegt auf einer nativen iPhone-App, damit Sensorik, Haptik und Laufinteraktion konsequent umgesetzt werden können.</p></details>
+          <details><summary>ERSETZT CORE RUN MEDIZINISCHE BERATUNG?<span>+</span></summary><p>Nein. Core Run ist ein Fitness- und Laufprodukt und kein medizinisches Diagnose- oder Behandlungsangebot.</p></details>
+        </div>
+      </section>
+
+      <section class="final-cta section" id="waitlist-bottom" data-track-section="final_waitlist">
+        <div class="cta-glow" aria-hidden="true"></div>
+        <div class="reveal">
+          <p class="eyebrow"><span class="signal-dot"></span> EARLY ACCESS</p>
+          <h2>READY TO<br /><span>TRACK THE EFFORT?</span></h2>
+          <p>Jetzt anmelden und späteren Bonus sichern.</p>
+          <form class="waitlist-form compact ph-no-capture" data-waitlist-form target="mailer-frame" novalidate>
+            <label class="sr-only" for="footer-email">E-Mail-Adresse</label>
+            <div class="form-row">
+              <input id="footer-email" name="fields[email]" type="email" autocomplete="email" placeholder="DEINE E-MAIL-ADRESSE" required data-waitlist-email />
+              <button type="submit">BONUS SICHERN <span aria-hidden="true">↗</span></button>
+            </div>
+            <label class="consent"><input type="checkbox" name="consent" required /><span>Ich akzeptiere die <a href="datenschutz.html">Datenschutzhinweise</a> und möchte Informationen zum Start erhalten.</span></label>
+            <p class="form-status" data-form-status role="status" aria-live="polite">DOUBLE-OPT-IN · JEDERZEIT ABMELDBAR</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#top"><span>CORE</span><strong>RUN</strong></a>
+      <p>TRACK THE EFFORT.</p>
+      <nav aria-label="Rechtliches"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><button type="button" class="privacy-settings" data-open-consent>Analytics ändern</button></nav>
+      <small>© <span data-year></span> CORE RUN</small>
+    </footer>
+
+    <aside class="consent-panel" data-consent-panel hidden aria-labelledby="consent-title">
+      <div>
+        <p class="eyebrow">DEINE ENTSCHEIDUNG</p>
+        <h2 id="consent-title">HILF UNS ZU VERSTEHEN, WAS INTERESSIERT.</h2>
+        <p>Notwendige Funktionen laufen immer. Optionale Produktanalyse hilft zu erkennen, welche Bereiche betrachtet werden – Formulareingaben und Nachrichten werden dabei nicht aufgezeichnet.</p>
+      </div>
+      <div class="consent-actions"><button type="button" data-consent="reject">NUR NOTWENDIGE</button><button type="button" class="accept" data-consent="accept">ANALYSE ERLAUBEN</button></div>
+    </aside>
+
+    <iframe name="mailer-frame" title="Waitlist-Anmeldung" class="hidden-frame"></iframe>
+  </body>
+</html>
