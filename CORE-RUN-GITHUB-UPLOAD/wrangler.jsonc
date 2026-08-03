@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "bold-field-33a4",
+  "name": "corerun",
   "compatibility_date": "2026-08-03",
   "assets": {
     "directory": "./public"
