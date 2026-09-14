@@ -20,6 +20,7 @@ const calibrationStage = document.querySelector("[data-calibration-stage]");
 const parallaxPhone = document.querySelector("[data-parallax-phone]");
 let effortComplete = false;
 let planComplete = false;
+let planTimer = null;
 let scrollFrame = null;
 
 document.documentElement.classList.add("motion-ready");
@@ -38,7 +39,7 @@ const smoothstep = (value) => {
 };
 const setMotionValue = (node, property, value) => node?.style.setProperty(property, value);
 
-const updateEffortStage = () => {
+const updateEffortStageLegacy = () => {
   if (!effortStage) return;
   const progress = stageProgress(effortStage);
   effortStage.style.setProperty("--effort-progress", progress.toFixed(3));
@@ -142,7 +143,7 @@ const updateEffortStage = () => {
   }
 };
 
-const updatePlanStage = () => {
+const updatePlanStageLegacy = () => {
   if (!planStage) return;
   const progress = stageProgress(planStage);
   planStage.style.setProperty("--plan-progress", progress.toFixed(3));
@@ -231,6 +232,101 @@ const updatePlanStage = () => {
   }
 };
 
+const updateEffortStage = () => {
+  if (!effortStage) return;
+  const progress = stageProgress(effortStage);
+  const factors = [
+    ["AKTUELLES FITNESSLEVEL", "Dein persönlicher Ausgangspunkt."],
+    ["GESCHWINDIGKEIT", "Relativ zu deinem aktuellen Leistungsstand."],
+    ["DISTANZ", "Wie weit die Belastung reicht."],
+    ["DAUER", "Wie lange dein Körper arbeitet."],
+    ["HÖHENPROFIL", "Steigung und Gefälle verändern die Belastung."],
+    ["WETTER", "Temperatur, Luftfeuchtigkeit und Wind verändern die Bedingungen."],
+  ];
+  const factorStart = 0.035;
+  const factorEnd = 0.5;
+  const factorProgress = clamp((progress - factorStart) / (factorEnd - factorStart));
+  const factorIndex = Math.min(Math.floor(factorProgress * factors.length), factors.length - 1);
+  const factorEntry = smoothstep((progress - factorStart) / 0.045);
+  const factorExit = smoothstep((progress - 0.49) / 0.075);
+  const scoreEntry = smoothstep((progress - 0.49) / 0.12);
+  const recommendationEntry = smoothstep((progress - 0.665) / 0.075);
+  const analysisEntry = smoothstep((progress - 0.835) / 0.13);
+  const resultVisibility = scoreEntry * (1 - analysisEntry);
+  const factor = effortStage.querySelector("[data-effort-factor]");
+  const factorNumber = effortStage.querySelector("[data-effort-factor-index]");
+  const factorTitle = effortStage.querySelector("[data-effort-factor-title]");
+  const factorCopy = effortStage.querySelector("[data-effort-factor-copy]");
+  const rail = effortStage.querySelector("[data-effort-rail]");
+  const railFill = effortStage.querySelector("[data-effort-rail-fill]");
+  const scoreNumber = effortStage.querySelector("[data-effort-number]");
+  const scoreLabel = effortStage.querySelector(".score-inner span");
+  const scoreRing = effortStage.querySelector(".score-ring-scroll");
+  const result = effortStage.querySelector("[data-effort-result]");
+  const stageHead = effortStage.querySelector(".effort-stage-head");
+  const recommendation = effortStage.querySelector("[data-effort-recommendation]");
+  const analysisBridge = effortStage.querySelector("[data-effort-analysis]");
+  const isMobile = !desktopStory.matches;
+
+  if (factor && factor.dataset.activeIndex !== String(factorIndex)) {
+    factor.dataset.activeIndex = String(factorIndex);
+    if (factorNumber) factorNumber.textContent = `${String(factorIndex + 1).padStart(2, "0")} / 06`;
+    if (factorTitle) factorTitle.textContent = factors[factorIndex][0];
+    if (factorCopy) factorCopy.textContent = factors[factorIndex][1];
+    factor.classList.remove("changing");
+    requestAnimationFrame(() => factor.classList.add("changing"));
+  }
+  if (railFill) railFill.style.width = `${(factorProgress * 100).toFixed(2)}%`;
+  effortStage.querySelectorAll("[data-effort-marker]").forEach((marker, index) => {
+    marker.classList.toggle("done", factorProgress >= (index + 1) / factors.length);
+    marker.classList.toggle("active", index === factorIndex && factorProgress < 1);
+  });
+
+  const score = Math.round(73 * scoreEntry);
+  if (scoreNumber) scoreNumber.textContent = String(score);
+  if (scoreLabel) scoreLabel.textContent = scoreEntry > 0.9 ? "FORDERND" : "WIRD BERECHNET";
+  setMotionValue(scoreRing, "--score-arc", (73 * scoreEntry).toFixed(2));
+  setMotionValue(stageHead, "--effort-head-opacity", (1 - smoothstep((progress - 0.025) / 0.075)).toFixed(3));
+  setMotionValue(factor, "--factor-opacity", (factorEntry * (1 - factorExit)).toFixed(3));
+  setMotionValue(factor, "--factor-y", `${(-28 * factorExit).toFixed(1)}px`);
+  setMotionValue(rail, "--rail-opacity", (factorEntry * (1 - factorExit)).toFixed(3));
+  setMotionValue(rail, "--rail-y", `${(-Math.min(window.innerHeight * 0.27, 220) * factorExit).toFixed(1)}px`);
+  setMotionValue(rail, "--rail-scale", (1 - 0.72 * factorExit).toFixed(3));
+  setMotionValue(result, "--result-opacity", resultVisibility.toFixed(3));
+  setMotionValue(result, "--result-scale", (0.72 + 0.28 * scoreEntry - 0.08 * analysisEntry).toFixed(3));
+  setMotionValue(result, "--result-x", `${isMobile ? 0 : (190 * (1 - recommendationEntry)).toFixed(1)}px`);
+  setMotionValue(recommendation, "--recommendation-opacity", (recommendationEntry * (1 - analysisEntry)).toFixed(3));
+  setMotionValue(recommendation, "--recommendation-x", `${(50 * (1 - recommendationEntry)).toFixed(1)}px`);
+  recommendation?.setAttribute("aria-hidden", recommendationEntry < 0.12 || analysisEntry > 0.88 ? "true" : "false");
+  setMotionValue(analysisBridge, "--analysis-opacity", analysisEntry.toFixed(3));
+  setMotionValue(analysisBridge, "--analysis-scale", (0.9 + 0.1 * analysisEntry).toFixed(3));
+  setMotionValue(analysisBridge, "--analysis-phone-y", `${(110 * (1 - analysisEntry)).toFixed(1)}px`);
+  setMotionValue(analysisBridge, "--analysis-phone-rotate", `${(5 * (1 - analysisEntry)).toFixed(2)}deg`);
+  setMotionValue(analysisBridge, "--analysis-phone-scale", (0.78 + 0.22 * analysisEntry).toFixed(3));
+  analysisBridge?.setAttribute("aria-hidden", analysisEntry < 0.12 ? "true" : "false");
+
+  if (progress >= 0.95 && !effortComplete) {
+    effortComplete = true;
+    capture("effort_explainer_completed");
+  }
+};
+
+const playPlanStage = () => {
+  if (!planStage || reducedMotion) return;
+  window.clearTimeout(planTimer);
+  planStage.classList.remove("is-playing", "is-complete");
+  void planStage.offsetWidth;
+  planStage.classList.add("is-playing");
+  planTimer = window.setTimeout(() => {
+    planStage.classList.remove("is-playing");
+    planStage.classList.add("is-complete");
+    if (!planComplete) {
+      planComplete = true;
+      capture("training_plan_explainer_completed");
+    }
+  }, 6500);
+};
+
 const updateCalibration = () => {
   if (!calibrationStage) return;
   const rect = calibrationStage.getBoundingClientRect();
@@ -249,7 +345,6 @@ const updateScrollEffects = () => {
 
   if (!reducedMotion) {
     updateEffortStage();
-    updatePlanStage();
     if (parallaxPhone && desktopStory.matches) {
       const offset = Math.min(window.scrollY * 0.08, 70);
       parallaxPhone.style.setProperty("--phone-shift", `${offset}px`);
@@ -284,6 +379,29 @@ if ("IntersectionObserver" in window && !reducedMotion) {
   reveals.forEach((node) => revealObserver.observe(node));
 } else {
   reveals.forEach((node) => node.classList.add("visible"));
+}
+
+if (planStage) {
+  if (reducedMotion) {
+    planStage.classList.add("is-complete");
+  } else if ("IntersectionObserver" in window) {
+    const planObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || planStage.classList.contains("has-played")) return;
+        planStage.classList.add("has-played");
+        playPlanStage();
+        planObserver.unobserve(planStage);
+      });
+    }, { threshold: 0.28 });
+    planObserver.observe(planStage);
+  } else {
+    playPlanStage();
+  }
+
+  planStage.querySelector("[data-plan-replay]")?.addEventListener("click", () => {
+    capture("training_plan_animation_replayed");
+    playPlanStage();
+  });
 }
 
 const initCloudflareAnalytics = () => {

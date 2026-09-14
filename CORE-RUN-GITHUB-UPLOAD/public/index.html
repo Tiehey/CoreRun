@@ -10,9 +10,9 @@
     <meta property="og:type" content="website" />
     <title>Core Run — Track the Effort</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260914-2" />
     <script src="site-config.js" defer></script>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=20260914-2" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Zum Inhalt springen</a>
@@ -102,26 +102,25 @@
             <strong>DEIN LAUF WIRD PERSÖNLICH EINGEORDNET.</strong>
           </div>
 
-          <div class="effort-node node-fitness" data-effort-node data-x="0" data-y="-70" data-cx="0" data-cy="280">
-            <span>01</span><strong>AKTUELLES FITNESSLEVEL</strong><small>Dein persönlicher Ausgangspunkt</small>
-          </div>
-          <div class="effort-node node-speed" data-effort-node data-x="90" data-y="-30" data-cx="-380" data-cy="180">
-            <span>02</span><strong>GESCHWINDIGKEIT</strong><small>Relativ zu deinem aktuellen Leistungsstand</small>
-          </div>
-          <div class="effort-node node-distance" data-effort-node data-x="90" data-y="30" data-cx="-380" data-cy="-160">
-            <span>03</span><strong>DISTANZ</strong><small>Wie weit die Belastung reicht</small>
-          </div>
-          <div class="effort-node node-duration" data-effort-node data-x="0" data-y="70" data-cx="0" data-cy="-300">
-            <span>04</span><strong>DAUER</strong><small>Wie lange dein Körper arbeitet</small>
-          </div>
-          <div class="effort-node node-elevation" data-effort-node data-x="-90" data-y="30" data-cx="380" data-cy="-160">
-            <span>05</span><strong>HÖHENPROFIL</strong><small>Steigung und Gefälle verändern die Belastung</small>
-          </div>
-          <div class="effort-node node-weather" data-effort-node data-x="-90" data-y="-30" data-cx="380" data-cy="180">
-            <span>06</span><strong>WETTER</strong><small>Temperatur, Luftfeuchtigkeit und Wind</small>
+          <div class="effort-factor" data-effort-factor aria-live="polite">
+            <span data-effort-factor-index>01 / 06</span>
+            <strong data-effort-factor-title>AKTUELLES FITNESSLEVEL</strong>
+            <p data-effort-factor-copy>Dein persönlicher Ausgangspunkt.</p>
           </div>
 
-          <div class="effort-center">
+          <div class="effort-rail" data-effort-rail aria-label="Bestandteile des Effort Scores">
+            <div class="effort-rail-track"><i data-effort-rail-fill></i></div>
+            <ol>
+              <li data-effort-marker><i></i><span>FITNESS</span></li>
+              <li data-effort-marker><i></i><span>GESCHWINDIGKEIT</span></li>
+              <li data-effort-marker><i></i><span>DISTANZ</span></li>
+              <li data-effort-marker><i></i><span>DAUER</span></li>
+              <li data-effort-marker><i></i><span>HÖHENPROFIL</span></li>
+              <li data-effort-marker><i></i><span>WETTER</span></li>
+            </ol>
+          </div>
+
+          <div class="effort-result" data-effort-result>
             <div class="score-ring score-ring-scroll" aria-label="Beispielhafter persönlicher Effort Score 73, fordernd">
               <svg class="score-ring-graphic" viewBox="0 0 100 100" aria-hidden="true">
                 <circle class="score-track" cx="50" cy="50" r="44" pathLength="100"></circle>
@@ -133,35 +132,31 @@
                 <small>EFFORT SCORE · 0—100</small>
               </div>
             </div>
+            <article class="effort-recommendation" data-effort-recommendation aria-hidden="true">
+              <span>NÄCHSTER LAUF</span>
+              <strong>KONTROLLIERT STARTEN.</strong>
+              <p>Beginne etwas ruhiger und baue die Belastung gleichmäßig auf.</p>
+              <small><b>73</b> GIBT DIR DIE ORIENTIERUNG FÜR DEINEN NÄCHSTEN RUN</small>
+            </article>
           </div>
 
-          <article class="effort-recommendation" data-effort-recommendation aria-hidden="true">
-            <span>NÄCHSTER LAUF</span>
-            <strong>KONTROLLIERT STARTEN.</strong>
-            <p>Beginne etwas ruhiger und baue die Belastung gleichmäßig auf.</p>
-            <small><b>73</b> WIRD ZUR ORIENTIERUNG FÜR DEINEN NÄCHSTEN RUN <i aria-hidden="true">→</i></small>
-          </article>
-
-          <article class="effort-analysis-preview" data-effort-analysis aria-hidden="true">
-            <div>
-              <span>DER SCORE IST DER EINSTIEG</span>
-              <strong>JETZT DEN GANZEN RUN VERSTEHEN.</strong>
-              <p>Sieh, wo Tempo, Strecke und Höhenprofil deinen Lauf geprägt haben.</p>
+          <div class="effort-analysis-bridge" data-effort-analysis aria-hidden="true">
+            <div class="effort-analysis-copy">
+              <span>02 — NACH DEM EFFORT SCORE</span>
+              <strong>DEIN LAUF.<br /><em>VOLLSTÄNDIG EINGEORDNET.</em></strong>
             </div>
             <div class="phone effort-analysis-phone"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/run-analysis.png" alt="Core Run Detailanalyse mit Strecke und Pace-Verlauf" width="1179" height="2556" loading="lazy" /></div>
-          </article>
+          </div>
 
-          <div class="effort-step-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="effort-progress" aria-hidden="true"><i data-effort-progress></i></div>
-          <p class="effort-mobile-note">WEITERSCROLLEN · DEIN RUN WIRD SICHTBAR</p>
+          <p class="effort-mobile-note">WEITERSCROLLEN · DEINE DATEN WERDEN ZUM SIGNAL</p>
         </div>
       </section>
 
       <section class="run-analysis section" id="analysis" data-track-section="run_analysis">
         <div class="run-analysis-copy reveal-left">
-          <p class="eyebrow">02 — NACH DEM EFFORT SCORE</p>
-          <h2>DEIN LAUF.<br /><span>VOLLSTÄNDIG EINGEORDNET.</span></h2>
-          <p>Der Score gibt dir die schnelle Einordnung. In der Analyse siehst du danach, wo Tempo, Strecke und Höhenprofil deinen Run geprägt haben.</p>
+          <p class="eyebrow">DIE EINORDNUNG IM DETAIL</p>
+          <h2>SIEH, WAS DEINEN<br /><span>RUN GEPRÄGT HAT.</span></h2>
+          <p>Der Score gibt dir die schnelle Einordnung. In der Analyse erkennst du anschließend, wo Tempo, Strecke und Höhenprofil deinen Run geprägt haben.</p>
           <ul><li><b>73</b><span>Persönliche Belastung auf einen Blick</span></li><li><b>01</b><span>Strecke, Pace-Verlauf und Höhenprofil im Detail</span></li><li><b>→</b><span>Konkrete Orientierung für den nächsten Lauf</span></li></ul>
         </div>
         <div class="run-analysis-phones reveal-right" aria-label="Core Run Effort Score und detaillierte Routenanalyse">
@@ -177,7 +172,6 @@
             <p class="eyebrow">03 — ATHLETE DATA VAULT</p>
             <h2>DEINE DATEN.<br /><span>DEINE BASIS.</span></h2>
             <p>Der Athlete Vault verbindet deine Läufe, Belastung und Datenqualität zu einem persönlichen Athletenprofil. So vergleicht Core Run dich immer stärker mit deiner eigenen Entwicklung.</p>
-            <div class="metric-list"><div><strong>35</strong><span>Ø EFFORT</span></div><div><strong>7.7</strong><span>KM DISTANZ</span></div><div><strong>100%</strong><span>DATENVERTRAUEN</span></div></div>
           </div>
           <div class="vault-phones reveal-right">
             <div class="phone phone-back"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/data-vault-development.png" alt="Core Run Data Vault mit Belastungsentwicklung und persönlicher Heatmap" width="1179" height="2556" loading="lazy" /></div>
@@ -248,32 +242,38 @@
         </div>
       </section>
 
-      <section class="plan-scroll" data-plan-stage data-track-section="training_plan_explainer">
-        <div class="plan-sticky">
-          <div class="plan-grid" aria-hidden="true"></div>
-          <div class="plan-stage-label">WAS DEINEN PLAN FORMT</div>
-
-          <div class="plan-card" data-plan-card><span>01 / DEINE DATEN</span><strong>LAUFHISTORIE</strong><p>Typische Distanz, Pace, Effort und dein bisheriger Wochenumfang bilden die reale Ausgangslage.</p></div>
-          <div class="plan-card" data-plan-card><span>02 / DEINE BASIS</span><strong>AKTUELLES FITNESSLEVEL</strong><p>Komfortable Distanz, typische Geschwindigkeit und Belastbarkeit bestimmen, wo der Plan beginnt.</p></div>
-          <div class="plan-card" data-plan-card><span>03 / DEINE RICHTUNG</span><strong>DEIN ZIEL</strong><p>Zieldistanz, Zielpace und verfügbarer Zeitraum geben dem Plan eine klare Richtung.</p></div>
-          <div class="plan-card" data-plan-card><span>04 / DEIN KÖRPER</span><strong>ERHOLUNG & LETZTE BELASTUNG</strong><p>Die jüngsten Einheiten beeinflussen, wie vorsichtig die kommende Belastung aufgebaut wird.</p></div>
-          <div class="plan-card" data-plan-card><span>05 / DEIN ALLTAG</span><strong>VERFÜGBARES ZEITBUDGET</strong><p>Mögliche Trainingstage und dein maximaler Zeitaufwand halten den Plan realistisch.</p></div>
-          <div class="plan-card" data-plan-card><span>06 / DEIN FORTSCHRITT</span><strong>TRAININGSVERLAUF</strong><p>Absolvierte, verpasste oder sehr belastende Einheiten verändern das, was als Nächstes kommt.</p></div>
-          <div class="plan-card plan-result-card" data-plan-card><span>DEIN CORE RUN PLAN</span><strong>AUS DEINER BASIS ENTWICKELT.</strong><p>Persönlich gestartet. Realistisch aufgebaut. Mit jedem Lauf weiterentwickelt.</p></div>
-
-          <div class="plan-phone-stage">
-            <div class="plan-phone-label"><span>DEIN PLAN</span><strong data-plan-counter>01 / 06</strong></div>
-            <div class="phone plan-stage-phone"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/training-plan.png" alt="Individueller Core Run Trainingsplan" width="1179" height="2556" loading="lazy" /></div>
-            <div class="plan-response" data-plan-response aria-live="polite">
-              <span>PLANREAKTION</span>
-              <strong data-plan-response-title>AUSGANGSLAGE ERKANNT</strong>
-              <p data-plan-response-copy>Wochenumfang und typische Belastung setzen den sicheren Startpunkt.</p>
-              <div><i data-plan-response-meter></i></div>
-            </div>
-            <div class="plan-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-          <div class="plan-progress" aria-hidden="true"><i data-plan-progress></i></div>
+      <section class="plan-builder section" data-plan-stage data-track-section="training_plan_explainer">
+        <div class="plan-builder-head">
+          <span>WAS DEINEN PLAN FORMT</span>
+          <strong>SECHS SIGNALE. EIN PLAN, DER ZU DIR PASST.</strong>
         </div>
+
+        <div class="plan-flow" aria-label="So entsteht dein individueller Trainingsplan">
+          <div class="plan-inputs">
+            <article data-plan-input style="--plan-order:0"><span>01</span><strong>LAUFHISTORIE</strong><small>Umfang · Pace · Effort</small></article>
+            <article data-plan-input style="--plan-order:1"><span>02</span><strong>FITNESSLEVEL</strong><small>Dein aktueller Stand</small></article>
+            <article data-plan-input style="--plan-order:2"><span>03</span><strong>DEIN ZIEL</strong><small>Distanz · Pace · Zeitraum</small></article>
+            <article data-plan-input style="--plan-order:3"><span>04</span><strong>LETZTE BELASTUNG</strong><small>Vorsichtig dosiert</small></article>
+            <article data-plan-input style="--plan-order:4"><span>05</span><strong>ZEITBUDGET</strong><small>Tage · maximaler Aufwand</small></article>
+            <article data-plan-input style="--plan-order:5"><span>06</span><strong>TRAININGSVERLAUF</strong><small>Absolviert · verpasst</small></article>
+          </div>
+
+          <div class="plan-engine" aria-hidden="true">
+            <i></i><i></i><i></i>
+            <span>CORE RUN</span>
+            <strong>PLAN</strong>
+          </div>
+
+          <div class="plan-output">
+            <div class="plan-output-label"><span>DEIN PLAN</span><strong>AUFEINANDER ABGESTIMMT</strong></div>
+            <div class="plan-output-phones">
+              <div class="phone plan-overview-phone"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/training-plan-overview.png" alt="Core Run Übersicht des persönlichen Trainingsplans" width="1179" height="2556" loading="lazy" /></div>
+              <div class="phone plan-session-phone"><span class="phone-speaker" aria-hidden="true"></span><img src="app-screens/training-plan-session.png" alt="Core Run nächste individuell geplante Laufeinheit" width="1179" height="2556" loading="lazy" /></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="plan-replay" type="button" data-plan-replay>ANIMATION NOCHMAL ANSEHEN <span aria-hidden="true">↻</span></button>
       </section>
 
       <section class="plan-honesty section" data-track-section="training_plan_detail">
@@ -285,7 +285,7 @@
           </div>
           <div class="phone plan-phone">
             <span class="phone-speaker" aria-hidden="true"></span>
-            <img src="app-screens/training-plan.png" alt="Persönlicher Core Run Trainingsplan" width="1179" height="2556" loading="lazy" />
+            <img src="app-screens/training-plan-overview.png" alt="Persönlicher Core Run Trainingsplan" width="1179" height="2556" loading="lazy" />
           </div>
         </div>
       </section>
