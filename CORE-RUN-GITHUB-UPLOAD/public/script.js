@@ -14,13 +14,14 @@ document.querySelectorAll("[data-year]").forEach((node) => {
 });
 
 const header = document.querySelector("[data-header]");
+const runStage = document.querySelector("[data-run-stage]");
 const effortStage = document.querySelector("[data-effort-stage]");
+const vaultTransition = document.querySelector("[data-vault-transition]");
 const planStage = document.querySelector("[data-plan-stage]");
 const calibrationStage = document.querySelector("[data-calibration-stage]");
 const parallaxPhone = document.querySelector("[data-parallax-phone]");
 let effortComplete = false;
 let planComplete = false;
-let planTimer = null;
 let scrollFrame = null;
 
 document.documentElement.classList.add("motion-ready");
@@ -39,6 +40,86 @@ const smoothstep = (value) => {
 };
 const setMotionValue = (node, property, value) => node?.style.setProperty(property, value);
 
+const updateRunStage = () => {
+  if (!runStage) return;
+  const progress = stageProgress(runStage);
+  const copies = [...runStage.querySelectorAll("[data-run-copy]")];
+  const boundaries = [0, 0.25, 0.5, 0.76, 1.01];
+  const activeIndex = Math.min(Math.floor(progress * 4), 3);
+  copies.forEach((copy, index) => {
+    const entry = index === 0 ? 1 : smoothstep((progress - boundaries[index]) / 0.055);
+    const exit = smoothstep((progress - (boundaries[index + 1] - 0.07)) / 0.055);
+    const opacity = entry * (1 - exit);
+    setMotionValue(copy, "--run-copy-opacity", opacity.toFixed(3));
+    setMotionValue(copy, "--run-copy-y", `${(30 * (1 - entry) - 24 * exit).toFixed(1)}px`);
+    copy.setAttribute("aria-hidden", opacity < 0.1 ? "true" : "false");
+  });
+
+  const home = runStage.querySelector(".run-phone-home");
+  const goal = runStage.querySelector(".run-phone-goal");
+  const live = runStage.querySelector(".run-phone-live");
+  const choiceShift = smoothstep((progress - 0.17) / 0.13);
+  const liveEntry = smoothstep((progress - 0.47) / 0.13);
+  const runSaved = smoothstep((progress - 0.78) / 0.15);
+  const modeVisibility = 1 - liveEntry;
+  const mobile = !desktopStory.matches;
+
+  setMotionValue(home, "--run-phone-opacity", modeVisibility.toFixed(3));
+  setMotionValue(home, "--run-phone-x", `${((mobile ? -50 : -90) * choiceShift).toFixed(1)}px`);
+  setMotionValue(home, "--run-phone-rotate", `${(-5 * choiceShift).toFixed(2)}deg`);
+  setMotionValue(home, "--run-phone-scale", (1 - 0.08 * choiceShift).toFixed(3));
+
+  const goalVisibility = smoothstep((progress - 0.18) / 0.09) * modeVisibility;
+  setMotionValue(goal, "--run-phone-opacity", goalVisibility.toFixed(3));
+  setMotionValue(goal, "--run-phone-x", `${((mobile ? 65 : 125) + 45 * (1 - choiceShift)).toFixed(1)}px`);
+  setMotionValue(goal, "--run-phone-rotate", `${(7 - 3 * choiceShift).toFixed(2)}deg`);
+  setMotionValue(goal, "--run-phone-scale", (0.84 + 0.08 * choiceShift).toFixed(3));
+
+  setMotionValue(live, "--run-phone-opacity", liveEntry.toFixed(3));
+  setMotionValue(live, "--run-phone-x", `${((mobile ? 55 : 105) * (1 - liveEntry)).toFixed(1)}px`);
+  setMotionValue(live, "--run-phone-y", `${(-25 * runSaved).toFixed(1)}px`);
+  setMotionValue(live, "--run-phone-rotate", `${(5 * (1 - liveEntry) - 2 * runSaved).toFixed(2)}deg`);
+  setMotionValue(live, "--run-phone-scale", (0.88 + 0.12 * liveEntry - 0.03 * runSaved).toFixed(3));
+
+  runStage.querySelectorAll(".run-stepper i").forEach((step, index) => step.classList.toggle("active", index <= activeIndex));
+};
+
+const updateVaultTransition = () => {
+  if (!vaultTransition) return;
+  const progress = stageProgress(vaultTransition);
+  const merge = smoothstep((progress - 0.5) / 0.22);
+  const cardsExit = smoothstep((progress - 0.72) / 0.11);
+  const cardPositions = [
+    { x: 55, y: -145, rotate: -4 },
+    { x: -25, y: 0, rotate: 2 },
+    { x: 35, y: 145, rotate: -1 },
+  ];
+  vaultTransition.querySelectorAll("[data-vault-run]").forEach((card, index) => {
+    const entry = smoothstep((progress - (0.03 + index * 0.13)) / 0.085);
+    const position = cardPositions[index];
+    const stackOffset = (index - 1) * 7;
+    const x = position.x * (1 - merge) + stackOffset * merge;
+    const y = position.y * (1 - merge) + stackOffset * merge;
+    const rotation = position.rotate * (1 - merge);
+    const opacity = entry * (1 - cardsExit);
+    setMotionValue(card, "--vault-card-opacity", opacity.toFixed(3));
+    setMotionValue(card, "--vault-card-x", `${x.toFixed(1)}px`);
+    setMotionValue(card, "--vault-card-y", `${y.toFixed(1)}px`);
+    setMotionValue(card, "--vault-card-rotate", `${rotation.toFixed(2)}deg`);
+    setMotionValue(card, "--vault-card-scale", (0.92 - 0.16 * merge).toFixed(3));
+  });
+
+  const labelEntry = smoothstep((progress - 0.56) / 0.12);
+  const phoneEntry = smoothstep((progress - 0.71) / 0.16);
+  const label = vaultTransition.querySelector("[data-vault-label]");
+  const phone = vaultTransition.querySelector("[data-vault-phone]");
+  setMotionValue(label, "--vault-label-opacity", (labelEntry * (1 - phoneEntry)).toFixed(3));
+  setMotionValue(label, "--vault-label-scale", (0.8 + 0.2 * labelEntry).toFixed(3));
+  setMotionValue(phone, "--vault-phone-opacity", phoneEntry.toFixed(3));
+  setMotionValue(phone, "--vault-phone-y", `${(50 * (1 - phoneEntry)).toFixed(1)}px`);
+  setMotionValue(phone, "--vault-phone-scale", (0.78 + 0.22 * phoneEntry).toFixed(3));
+};
+
 const updateEffortStageLegacy = () => {
   if (!effortStage) return;
   const progress = stageProgress(effortStage);
@@ -48,7 +129,7 @@ const updateEffortStageLegacy = () => {
   if (indicator) indicator.style.height = `${Math.round(progress * 100)}%`;
 
   const scoreEntry = smoothstep((progress - 0.015) / 0.51);
-  const score = Math.round(73 * scoreEntry);
+  const score = Math.round(72 * scoreEntry);
   const scoreNumber = effortStage.querySelector("[data-effort-number]");
   const scoreLabel = effortStage.querySelector(".score-inner span");
   const scoreRing = effortStage.querySelector(".score-ring-scroll");
@@ -254,11 +335,11 @@ const updateEffortStage = () => {
   const analysisEntry = smoothstep((progress - 0.835) / 0.13);
   const resultVisibility = scoreEntry * (1 - analysisEntry);
   const factor = effortStage.querySelector("[data-effort-factor]");
+  const formation = effortStage.querySelector("[data-effort-formation]");
+  const formationRing = formation?.querySelector(".formation-ring");
   const factorNumber = effortStage.querySelector("[data-effort-factor-index]");
   const factorTitle = effortStage.querySelector("[data-effort-factor-title]");
   const factorCopy = effortStage.querySelector("[data-effort-factor-copy]");
-  const rail = effortStage.querySelector("[data-effort-rail]");
-  const railFill = effortStage.querySelector("[data-effort-rail-fill]");
   const scoreNumber = effortStage.querySelector("[data-effort-number]");
   const scoreLabel = effortStage.querySelector(".score-inner span");
   const scoreRing = effortStage.querySelector(".score-ring-scroll");
@@ -276,22 +357,16 @@ const updateEffortStage = () => {
     factor.classList.remove("changing");
     requestAnimationFrame(() => factor.classList.add("changing"));
   }
-  if (railFill) railFill.style.width = `${(factorProgress * 100).toFixed(2)}%`;
-  effortStage.querySelectorAll("[data-effort-marker]").forEach((marker, index) => {
-    marker.classList.toggle("done", factorProgress >= (index + 1) / factors.length);
-    marker.classList.toggle("active", index === factorIndex && factorProgress < 1);
-  });
-
-  const score = Math.round(73 * scoreEntry);
+  const score = Math.round(72 * scoreEntry);
   if (scoreNumber) scoreNumber.textContent = String(score);
   if (scoreLabel) scoreLabel.textContent = scoreEntry > 0.9 ? "FORDERND" : "WIRD BERECHNET";
-  setMotionValue(scoreRing, "--score-arc", (73 * scoreEntry).toFixed(2));
+  setMotionValue(formationRing, "--score-arc", (54 * factorProgress).toFixed(2));
+  setMotionValue(scoreRing, "--score-arc", (54 * scoreEntry).toFixed(2));
   setMotionValue(stageHead, "--effort-head-opacity", (1 - smoothstep((progress - 0.025) / 0.075)).toFixed(3));
   setMotionValue(factor, "--factor-opacity", (factorEntry * (1 - factorExit)).toFixed(3));
   setMotionValue(factor, "--factor-y", `${(-28 * factorExit).toFixed(1)}px`);
-  setMotionValue(rail, "--rail-opacity", (factorEntry * (1 - factorExit)).toFixed(3));
-  setMotionValue(rail, "--rail-y", `${(-Math.min(window.innerHeight * 0.27, 220) * factorExit).toFixed(1)}px`);
-  setMotionValue(rail, "--rail-scale", (1 - 0.72 * factorExit).toFixed(3));
+  setMotionValue(formation, "--formation-opacity", (factorEntry * (1 - factorExit)).toFixed(3));
+  setMotionValue(formation, "--formation-scale", (1 - 0.1 * factorExit).toFixed(3));
   setMotionValue(result, "--result-opacity", resultVisibility.toFixed(3));
   setMotionValue(result, "--result-scale", (0.72 + 0.28 * scoreEntry - 0.08 * analysisEntry).toFixed(3));
   setMotionValue(result, "--result-x", `${isMobile ? 0 : (190 * (1 - recommendationEntry)).toFixed(1)}px`);
@@ -311,20 +386,47 @@ const updateEffortStage = () => {
   }
 };
 
-const playPlanStage = () => {
-  if (!planStage || reducedMotion) return;
-  window.clearTimeout(planTimer);
-  planStage.classList.remove("is-playing", "is-complete");
-  void planStage.offsetWidth;
-  planStage.classList.add("is-playing");
-  planTimer = window.setTimeout(() => {
-    planStage.classList.remove("is-playing");
-    planStage.classList.add("is-complete");
-    if (!planComplete) {
-      planComplete = true;
-      capture("training_plan_explainer_completed");
-    }
-  }, 6500);
+const updatePlanStage = () => {
+  if (!planStage) return;
+  const progress = stageProgress(planStage);
+  const steps = [...planStage.querySelectorAll("[data-plan-input]")];
+  const start = 0.035;
+  const end = 0.88;
+  const sequence = clamp((progress - start) / (end - start));
+  const activeIndex = Math.min(Math.floor(sequence * steps.length), steps.length - 1);
+  const statuses = [
+    "DEIN STARTPUNKT",
+    "DEINE EIGENE HISTORIE",
+    "DEINE RICHTUNG",
+    "DEIN REALISTISCHER RHYTHMUS",
+    "DEIN VERFÜGBARER RAHMEN",
+    "DEIN NÄCHSTER SINNVOLLER SCHRITT",
+  ];
+  const counter = planStage.querySelector("[data-plan-counter]");
+  const status = planStage.querySelector("[data-plan-status]");
+  const progressBar = planStage.querySelector("[data-plan-progress]");
+  const visual = planStage.querySelector("[data-plan-visual]");
+  const finish = planStage.querySelector("[data-plan-finish]");
+  const finishEntry = smoothstep((progress - 0.84) / 0.1);
+
+  steps.forEach((step, index) => {
+    step.classList.toggle("past", index < activeIndex || sequence >= 1);
+    step.classList.toggle("active", index === activeIndex && sequence < 1);
+  });
+  if (counter) counter.textContent = sequence >= 1 ? "PLAN BEREIT" : `${String(activeIndex + 1).padStart(2, "0")} / 06`;
+  if (status) status.textContent = sequence >= 1 ? "AUFEINANDER ABGESTIMMT" : statuses[activeIndex];
+  if (progressBar) progressBar.style.height = `${(sequence * 100).toFixed(2)}%`;
+  setMotionValue(visual, "--plan-fill", `${(sequence * 100).toFixed(2)}%`);
+  setMotionValue(visual, "--plan-insights-y", `${(-16 * sequence).toFixed(1)}px`);
+  setMotionValue(visual, "--plan-main-y", `${(-25 * sequence).toFixed(1)}px`);
+  setMotionValue(visual, "--plan-main-scale", (0.96 + 0.04 * sequence).toFixed(3));
+  setMotionValue(finish, "--finish-opacity", finishEntry.toFixed(3));
+  setMotionValue(finish, "--finish-y", `${(18 * (1 - finishEntry)).toFixed(1)}px`);
+
+  if (progress >= 0.95 && !planComplete) {
+    planComplete = true;
+    capture("training_plan_explainer_completed");
+  }
 };
 
 const updateCalibration = () => {
@@ -344,7 +446,10 @@ const updateScrollEffects = () => {
   header?.classList.toggle("scrolled", window.scrollY > 24);
 
   if (!reducedMotion) {
+    updateRunStage();
     updateEffortStage();
+    updateVaultTransition();
+    updatePlanStage();
     if (parallaxPhone && desktopStory.matches) {
       const offset = Math.min(window.scrollY * 0.08, 70);
       parallaxPhone.style.setProperty("--phone-shift", `${offset}px`);
@@ -379,29 +484,6 @@ if ("IntersectionObserver" in window && !reducedMotion) {
   reveals.forEach((node) => revealObserver.observe(node));
 } else {
   reveals.forEach((node) => node.classList.add("visible"));
-}
-
-if (planStage) {
-  if (reducedMotion) {
-    planStage.classList.add("is-complete");
-  } else if ("IntersectionObserver" in window) {
-    const planObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting || planStage.classList.contains("has-played")) return;
-        planStage.classList.add("has-played");
-        playPlanStage();
-        planObserver.unobserve(planStage);
-      });
-    }, { threshold: 0.28 });
-    planObserver.observe(planStage);
-  } else {
-    playPlanStage();
-  }
-
-  planStage.querySelector("[data-plan-replay]")?.addEventListener("click", () => {
-    capture("training_plan_animation_replayed");
-    playPlanStage();
-  });
 }
 
 const initCloudflareAnalytics = () => {
