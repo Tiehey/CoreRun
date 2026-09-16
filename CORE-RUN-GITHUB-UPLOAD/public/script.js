@@ -19,7 +19,7 @@ const analysisStage = document.querySelector("[data-analysis-stage]");
 const vaultTransition = document.querySelector("[data-vault-transition]");
 const planStage = document.querySelector("[data-plan-stage]");
 const parallaxPhone = document.querySelector("[data-parallax-phone]");
-const shortViewport = window.matchMedia("(max-height: 620px), (max-width: 780px) and (max-height: 740px)");
+
 let effortComplete = false;
 let planComplete = false;
 let scrollFrame = null;
@@ -31,10 +31,11 @@ const motion = (node, key, value) => node?.style.setProperty(key, String(value))
 const stageProgress = stage => {
   const sticky = stage.querySelector(".journey-sticky");
   const height = sticky.offsetHeight;
-  if (getComputedStyle(sticky).position !== "sticky") {
-    return clamp((innerHeight * .85 - stage.getBoundingClientRect().top) / (stage.offsetHeight + innerHeight * .4));
-  }
-  return clamp(-stage.getBoundingClientRect().top / Math.max(1, stage.offsetHeight - height));
+  // Tall, readable scenes scroll into view before pinning at their lower edge.
+  const top = Math.min(0, innerHeight - height);
+  sticky.style.setProperty("--scene-top", top + "px");
+  stage.style.setProperty("--scene-height", height + "px");
+  return clamp((-stage.getBoundingClientRect().top + top) / Math.max(1, stage.offsetHeight - height));
 };
 
 const updateEffortStage = () => {
@@ -108,8 +109,7 @@ const updatePlanStage = () => {
   if (!planStage) return;
   const p = stageProgress(planStage);
   const steps = [...planStage.querySelectorAll("[data-plan-input]")];
-  const flowing = getComputedStyle(planStage.querySelector(".journey-sticky")).position !== "sticky";
-  const index = flowing ? steps.reduce((best, step, i) => Math.abs(step.getBoundingClientRect().top - innerHeight * .6) < Math.abs(steps[best].getBoundingClientRect().top - innerHeight * .6) ? i : best, 0) : Math.min(5, Math.floor(p * 6));
+  const index = Math.min(5, Math.floor(p * 6));
   steps.forEach((step, i) => {
     step.classList.toggle("active", i === index);
     step.classList.toggle("past", i < index);
@@ -121,7 +121,7 @@ const updatePlanStage = () => {
 const updateScrollEffects = () => {
   scrollFrame = null;
   header?.classList.toggle("scrolled", window.scrollY > 24);
-  if (reducedMotion || shortViewport.matches) {
+  if (reducedMotion) {
     motion(effortStage, "--gauge-fill", 72);
     motion(effortStage, "--number-scale", 1);
     motion(effortStage, "--rec-opacity", 1);
@@ -148,7 +148,6 @@ window.addEventListener("resize", requestScrollUpdate, { passive: true });
 window.addEventListener("load", requestScrollUpdate, { once: true });
 window.addEventListener("pageshow", requestScrollUpdate);
 desktopStory.addEventListener?.("change", requestScrollUpdate);
-shortViewport.addEventListener?.("change", requestScrollUpdate);
 window.visualViewport?.addEventListener("resize", requestScrollUpdate, { passive: true });
 
 const reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
