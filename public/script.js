@@ -19,7 +19,7 @@ const analysisStage = document.querySelector("[data-analysis-stage]");
 const vaultTransition = document.querySelector("[data-vault-transition]");
 const planStage = document.querySelector("[data-plan-stage]");
 const parallaxPhone = document.querySelector("[data-parallax-phone]");
-const shortViewport = window.matchMedia("(max-height: 620px)");
+const shortViewport = window.matchMedia("(max-height: 620px), (max-width: 780px) and (max-height: 740px)");
 let effortComplete = false;
 let planComplete = false;
 let scrollFrame = null;
@@ -29,7 +29,11 @@ const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const smoothstep = value => { const t = clamp(value); return t * t * (3 - 2 * t); };
 const motion = (node, key, value) => node?.style.setProperty(key, String(value));
 const stageProgress = stage => {
-  const height = stage.querySelector(".journey-sticky").offsetHeight;
+  const sticky = stage.querySelector(".journey-sticky");
+  const height = sticky.offsetHeight;
+  if (getComputedStyle(sticky).position !== "sticky") {
+    return clamp((innerHeight * .85 - stage.getBoundingClientRect().top) / (stage.offsetHeight + innerHeight * .4));
+  }
   return clamp(-stage.getBoundingClientRect().top / Math.max(1, stage.offsetHeight - height));
 };
 
@@ -104,7 +108,8 @@ const updatePlanStage = () => {
   if (!planStage) return;
   const p = stageProgress(planStage);
   const steps = [...planStage.querySelectorAll("[data-plan-input]")];
-  const index = Math.min(5, Math.floor(p * 6));
+  const flowing = getComputedStyle(planStage.querySelector(".journey-sticky")).position !== "sticky";
+  const index = flowing ? steps.reduce((best, step, i) => Math.abs(step.getBoundingClientRect().top - innerHeight * .6) < Math.abs(steps[best].getBoundingClientRect().top - innerHeight * .6) ? i : best, 0) : Math.min(5, Math.floor(p * 6));
   steps.forEach((step, i) => {
     step.classList.toggle("active", i === index);
     step.classList.toggle("past", i < index);
