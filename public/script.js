@@ -107,8 +107,9 @@ const updateVaultTransition = () => {
 
 const updatePlanStage = () => {
   if (!planStage) return;
-  const p = stageProgress(planStage);
   const steps = [...planStage.querySelectorAll("[data-plan-input]")];
+  const flowing = !desktopStory.matches;
+  const p = flowing ? clamp((innerHeight * .7 - steps[0].getBoundingClientRect().top) / Math.max(1, steps.at(-1).offsetTop - steps[0].offsetTop)) : stageProgress(planStage);
   const index = Math.min(5, Math.floor(p * 6));
   steps.forEach((step, i) => {
     step.classList.toggle("active", i === index);
@@ -136,12 +137,21 @@ const updateScrollEffects = () => {
   updateAnalysisStage();
   updateVaultTransition();
   updatePlanStage();
+  if (desktopStory.matches) {
+    document.querySelectorAll(".intro-scroll-reveal").forEach(node => {
+      const top = node.getBoundingClientRect().top - (parseFloat(node.style.getPropertyValue("--intro-y")) || 0);
+      const entry = smoothstep((innerHeight * .92 - top) / (innerHeight * .3));
+      motion(node, "--intro-opacity", entry);
+      motion(node, "--intro-y", (30 * (1 - entry)) + "px");
+    });
+  }
   if (parallaxPhone && desktopStory.matches) motion(parallaxPhone, "--phone-shift", Math.min(window.scrollY * .08, 70) + "px");
 };
 
 const requestScrollUpdate = () => {
   if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScrollEffects);
 };
+document.querySelectorAll("#experience .reveal, #experience .reveal-left, #experience .reveal-right, .live-section .reveal-left, .live-section .reveal-right, .effort-intro .reveal").forEach(node => node.classList.add("intro-scroll-reveal"));
 updateScrollEffects();
 window.addEventListener("scroll", requestScrollUpdate, { passive: true });
 window.addEventListener("resize", requestScrollUpdate, { passive: true });

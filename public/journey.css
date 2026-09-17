@@ -237,3 +237,14 @@
   .profile-layout { height: max(100svh, 840px); }
   .analysis-layout,.plan-layout { min-height: 100svh; height: auto; overflow: hidden; padding-top: 82px; }
 }
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 781px) {
+  .intro-scroll-reveal,.intro-scroll-reveal.visible { opacity: var(--intro-opacity, 0); transform: translateY(var(--intro-y, 30px)); transition: none; }
+}
+@media (max-width: 780px) {
+  .analysis-details { opacity: 1; transform: none; }
+  .plan-journey { height: auto; }
+  .plan-layout { position: relative; top: 0; height: auto; min-height: 0; }
+}
+.legal-page h1 { font-size: clamp(32px, 7.5vw, 100px); line-height: 1.05; }
+.legal-page { overflow-wrap: break-word; }
